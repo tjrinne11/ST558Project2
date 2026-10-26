@@ -115,3 +115,33 @@ ggplot(df %>% filter(gas_cost > 0), aes(x = age, y = gas_cost, color = sex)) +
   ) +
   theme_minimal()
 ```
+
+```{r}
+# Plot 5: Grouped Density Plot
+# Distribution of gas costs grouped and by education level
+ggplot(df %>% filter(gas_cost > 0, gas_cost <= 500), aes(x = gas_cost, fill = education)) +
+  geom_density(alpha = 0.35) +
+  scale_fill_brewer(palette = "Dark") +
+  labs(
+    title = "Monthly Gas Cost Density across Education Levels",
+    x = "Monthly Gas Cost ($)",
+    y = "Density",
+    fill = "Education Level"
+  ) +
+  theme_minimal()
+```
+
+```{r}
+# Plot 6: Uncovered Plot Type 2D Heatmap
+# Binned 2D density of Age vs. Rent Burden (GRPIP)
+ggplot(df %>% filter(rent_burden > 0, rent_burden <= 100), aes(x = age, y = rent_burden)) +
+  geom_bin_2d(bins = 30) +
+  scale_fill_viridis_c(option = "magma") +
+  labs(
+    title = "2D Density Heatmap: Age vs. Gross Rent Burden",
+    x = "Age (Years)",
+    y = "Rent as % of Income (GRPIP)",
+    fill = "Observations"
+  ) +
+  theme_minimal()
+```
