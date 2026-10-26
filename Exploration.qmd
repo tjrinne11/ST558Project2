@@ -1,0 +1,117 @@
+---
+title: "Data Exploration"
+format: pdf
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+
+# Read the local data
+df <- read_csv("data/nc_census_pums.csv")
+head(df)
+```
+
+## 1. Contingency Tables
+
+```{r}
+# One-Way Contingency Table: Distribution of Educational Attainment
+edu_table <- table(df$education)
+edu_table
+
+# Two-Way Contingency Table: Education by Sex
+edu_sex_table <- table(df$education, df$sex)
+edu_sex_table
+
+# Row Proportions across Education Levels
+round(prop.table(edu_sex_table, margin = 1), 3)
+
+
+```
+
+## 2. Grouped Numerical Summaries
+
+```{r}
+# summaries of gas cost and rent grouped by education and sex
+# Accounting for survey person weights (weight = PWGTP)
+summary_stats <- df %>%
+  group_by(education, sex) %>%
+  summarize(
+    weighted_mean_gas  = sum(gas_cost * weight, na.rm = TRUE) / sum(weight, na.rm = TRUE),
+    median_gas         = median(gas_cost, na.rm = TRUE),
+    sd_gas             = sd(gas_cost, na.rm = TRUE),
+    weighted_mean_rent = sum(rent_burden * weight, na.rm = TRUE) / sum(weight, na.rm = TRUE),
+    median_rent        = median(rent_burden, na.rm = TRUE),
+    sd_rent            = sd(rent_burden, na.rm = TRUE),
+    iqr_rent           = IQR(rent_burden, na.rm = TRUE),
+    sample_size        = n(),
+    .groups            = "drop"
+  )
+
+summary_stats
+```
+
+## 3. Graphical Summaries
+
+```{r}
+# Plot 1: Bar Chart
+# Distribution of education
+ggplot(df, aes(x = education)) +
+  geom_bar(fill = "#1b4f72") +
+  labs(
+    title = "Distribution of Educational Attainment in North Carolina",
+    x = "Education Level",
+    y = "Sample Count"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 25, hjust = 1))
+```
+
+```{r}
+# Plot 2: Side-by-Side Bar Chart
+# Educational attainment grouped by sex
+ggplot(df, aes(x = education, fill = sex)) +
+  geom_bar(position = "dodge") +
+  scale_fill_manual(values = c("Male" = "#2980b9", "Female" = "#8e44ad")) +
+  labs(
+    title = "Educational Attainment by Sex in North Carolina",
+    x = "Education Level",
+    y = "Count",
+    fill = "Sex"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 25, hjust = 1))
+```
+
+```{r}
+# Plot 3: Boxplot with Faceting
+# Gross rent burden across education levels, faceted by sex
+ggplot(df %>% filter(rent_burden > 0), aes(x = education, y = rent_burden, fill = education)) +
+  geom_boxplot(outlier.alpha = 0.15) +
+  facet_wrap(~ sex) +
+  coord_cartesian(ylim = c(0, 100)) +
+  scale_fill_brewer(palette = "Blues") +
+  labs(
+    title = "Gross Rent Burden (% of Income) by Education Faceted by Sex",
+    x = "Education Level",
+    y = "Rent as % of Income (GRPIP)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none", axis.text.x = element_text(angle = 30, hjust = 1))
+```
+
+```{r}
+# Plot 4: Scatter Plot with Smoothing
+# Gas cost vs. Age, colored by sex with lines
+ggplot(df %>% filter(gas_cost > 0), aes(x = age, y = gas_cost, color = sex)) +
+  geom_point(alpha = 0.15) +
+  geom_smooth(method = "loess", se = FALSE) +
+  scale_color_manual(values = c("Male" = "#2980b9", "Female" = "#8e44ad")) +
+  labs(
+    title = "Monthly Gas Cost vs. Age Trajectory by Sex",
+    x = "Age (Years)",
+    y = "Monthly Gas Cost ($)",
+    color = "Sex"
+  ) +
+  theme_minimal()
+```
