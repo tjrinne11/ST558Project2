@@ -286,7 +286,7 @@ server <- function(input, output, session) {
           labs(title = paste("Weighted Counts of", x, "by", fill), x = x, y = "Weighted count", fill = fill)
       }
       
-      p + theme_minimal(base_size = 14) +
+      p + theme_minimal(base_size = 14) + 
         theme(axis.text.x = element_text(angle = 30, hjust = 1))
       
     } else {
