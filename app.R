@@ -121,7 +121,7 @@ ui <- page_sidebar(
       br(),
       div(
         style = "text-align: left;",
-        img(src = "project_logo.png", alt = "Project Logo", style = "max-width: 200px; height: auto;")
+        img(src = "census_logo.svg", style = "max-width: 200px; height: auto;")
       )
     ),
     

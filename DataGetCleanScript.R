@@ -4,6 +4,11 @@ library(tidyverse)
 
 dir.create("~/ST558Project2/data", showWarnings = FALSE)
 dir.create("~/ST558Project2/www", showWarnings = FALSE)
+download.file(
+  "https://www.census.gov/etc.clientlibs/census/clientlibs/census-pattern-library/resources/images/USCENSUS_IDENTITY_SOLO_BLACK_1.5in_R_no_padding.svg",
+  destfile = "www/census_logo.svg",
+  mode = "wb"
+)
 
 # Census PUMS API 
 api_key <- "c6758c38f49e633cc5c6631c8251876e5bc70c58"
