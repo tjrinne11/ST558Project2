@@ -13,5 +13,10 @@ This app lets users filter NC demographic data, view and download subsets, and c
 * **Data Exploration:** Numerical summaries and plots across variables.
 
 ## Links
-* **Live App:** ``
-* **Data Source:** [U.S. Census Bureau ACS PUMS](https://www.census.gov/programs-surveys/acs/microdata.html) 
+* **Live App:** [My app](https://tjrinne.shinyapps.io/TomasRinneProject2/)
+* **Data Source:** [U.S. Census Bureau ACS PUMS](https://www.census.gov/programs-surveys/acs/microdata.html)
+
+## Packages 
+
+install.packages(c("shiny", "bslib", "tidyverse", "DT", "shinycssloaders"))
+
