@@ -102,7 +102,7 @@ ui <- page_sidebar(
       h3("North Carolina Census PUMS Exploration"),
       p(
         "This interactive dashboard enables users to analyze demographic and financial patterns in North Carolina ",
-        "using microdata from the U.S. Census Bureau's American Community Survey (ACS) Public Use Microdata Sample (PUMS)."
+        "using microdata from the U.S. Census Bureau's Public Data Sample."
       ),
       h4("Data Provenance & Source"),
       p(
@@ -113,9 +113,9 @@ ui <- page_sidebar(
       ),
       h4("How to Navigate the Application"),
       tags$ul(
-        tags$li(strong("Sidebar:"), " Subset by education, sex, and custom numeric ranges. Click 'Apply Filters' to execute updates."),
-        tags$li(strong("About Tab:"), " App background, data links, and user directions."),
-        tags$li(strong("Data Download Tab:"), " Interactive DT table displaying the filtered subset with CSV export."),
+        tags$li(strong("Sidebar:"), " Subset by education, sex, and custom numeric ranges. Click 'Apply Filters' to update."),
+        tags$li(strong("About Tab:"), " App background, data links, and directions."),
+        tags$li(strong("Data Download Tab:"), " Interactive table displaying the filtered subset with export."),
         tags$li(strong("Data Exploration Tab:"), " Dynamic tables, weighted statistics, and plots.")
       ),
       br(),
@@ -123,6 +123,7 @@ ui <- page_sidebar(
         style = "text-align: left;",
         img(src = "census_logo.svg", style = "max-width: 200px; height: auto;")
       )
+      
     ),
     
     # TAB 2: DATA DOWNLOAD
