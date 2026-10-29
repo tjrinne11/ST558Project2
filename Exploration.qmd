@@ -1,6 +1,6 @@
 ---
 title: "Data Exploration"
-format: pdf
+format: html
 editor: visual
 ---
 
